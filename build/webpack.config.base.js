@@ -1,6 +1,6 @@
 const path = require('path')
-const nodeExternals = require('webpack-node-externals')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const NodeExternals = require('webpack-node-externals')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const resolve = p => {
   return path.join(__dirname, '../', p)
@@ -14,10 +14,10 @@ module.exports = {
   },
 
   output: {
-    filename: '[name]-[hash].js',
+    filename: '[name].js',
     path: resolve('dist')
   },
-  
+
   module: {
     rules: [
       {
@@ -31,10 +31,21 @@ module.exports = {
   },
 
   externals: [
-    new nodeExternals()
+    new NodeExternals()
   ],
 
   plugins: [
     new CleanWebpackPlugin()
-  ]
+  ],
+
+  node: {
+    console: true,
+    global: true,
+    process: true,
+    Buffer: true,
+    __filename: true,
+    __dirname: true,
+    setImmediate: true,
+    path: true
+  }
 }
