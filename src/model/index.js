@@ -1,20 +1,24 @@
 /* 返回数据格式 */
+/* 成功 */
 class Success {
-  constructor ({ data = {}, msg = 'success' } = res) {
+  constructor (res) {
     return {
-      code: 'success',
-      msg,
-      data
+      code: 200,
+      error_code: null,
+      msg: res.msg || 'success',
+      data: res.data || {}
     }
   }
 }
 
+/* 失败 */
 class Fail {
-  constructor ({ data = {}, msg = 'fail' } = res) {
+  constructor (res) {
     return {
-      code: 'fail',
-      msg,
-      data
+      code: 500,
+      error_code: res.error_code || 1000,
+      msg: res.msg || 'fail',
+      data: {}
     }
   }
 }

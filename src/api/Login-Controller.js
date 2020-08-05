@@ -14,7 +14,6 @@ class LoginController {
    */
   async sendForgetMsg (ctx) {
     const { body } = ctx.request
-    console.log(ctx.request)
 
     try {
       const res = await emailSend({
