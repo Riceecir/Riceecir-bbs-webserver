@@ -9,11 +9,10 @@ const koaStatic = require('koa-static')
 const router = require('./routes/index')
 const koaJson = require('koa-json')
 const koaCompose = require('koa-compose')
+// const { client, setValue, getValue, delValue } = require('./config/redis.config')
 
 // 自己实现的静态资源服务
 // const staticMid = require('./middleware/static/index')
-// cookie相关
-const cookie = require('./middleware/cookie/index')
 
 const app = new Koa()
 const middleware = koaCompose([
@@ -25,7 +24,6 @@ const middleware = koaCompose([
 ])
 
 /* 中间件 */
-app.use(cookie)
 app.use(middleware)
 // app.use(staticMid(path.join(__dirname, './static')))
 app.use(router())

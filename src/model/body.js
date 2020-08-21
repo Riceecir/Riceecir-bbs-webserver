@@ -2,11 +2,15 @@
 /* 成功 */
 class Success {
   constructor (res) {
-    return {
+    const defaultOptions = {
       code: 200,
       error_code: null,
-      msg: res.msg || 'success',
-      data: res.data || {}
+      msg: 'success',
+      data: {}
+    }
+    return {
+      ...defaultOptions,
+      ...res
     }
   }
 }
@@ -14,11 +18,15 @@ class Success {
 /* 失败 */
 class Fail {
   constructor (res) {
-    return {
+    const defaultOptions = {
       code: 500,
-      error_code: res.error_code || 1000,
-      msg: res.msg || 'fail',
+      error_code: 1000,
+      msg: 'fail',
       data: {}
+    }
+    return {
+      ...defaultOptions,
+      ...res
     }
   }
 }

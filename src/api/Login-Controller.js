@@ -1,10 +1,32 @@
 const moment = require('moment')
 const emailSend = require('../config/mail.config')
-const { Success, Fail } = require('../model/index')
+const { Success, Fail } = require('../model/body')
+const { checkCode } = require('../common/index')
 
 class LoginController {
   constructor () {
     return this
+  }
+
+  /** 用户登录
+   * @param {string} body.user_name: 用户名
+   * @param {string} body.password: 密码
+   * @param {string} body.code: 验证码
+   * @param {string} body.sid: 客户端uuid
+   */
+  async login (ctx) {
+    const { body } = ctx.request
+    const checkResult = await checkCode(body.sid, body.code)
+    if (checkResult.result) {
+      ctx.body = new Success({
+        code: 200
+      })
+    } else {
+      ctx.body = new Fail({
+        code: 401,
+        msg: checkResult.isExpired ? '验证码超时,请重试' : '验证码错误,请重试'
+      })
+    }
   }
 
   /** 找回密码
