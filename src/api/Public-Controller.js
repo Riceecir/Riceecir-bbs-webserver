@@ -10,9 +10,9 @@ class PublicController {
 
   /* 创建验证码 */
   async createCaptcha (ctx) {
-    const newCaptcha = svgCaptcha.create({ ignoreChars: '0o1il', color: true })
+    const newCaptcha = svgCaptcha.create({ ignoreChars: '0Oo1iIlL', color: true })
     /* 存入 redis, 并设置过期时间 */
-    await setValue(ctx.query.sid, newCaptcha.text.toLocaleLowerCase(), 60)
+    await setValue(ctx.query.sid, newCaptcha.text.toLocaleLowerCase(), 60 * 3)
     ctx.body = new Success({ data: newCaptcha })
   }
 

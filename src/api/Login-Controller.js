@@ -1,7 +1,11 @@
 const moment = require('moment')
+const jsonwebtoken = require('jsonwebtoken')
 const emailSend = require('../config/mail.config')
+const { JWT_SECRET } = require('../config/index')
 const { Success, Fail } = require('../model/body')
 const { checkCode } = require('../common/index')
+const { delValue } = require('../config/redis.config')
+const User = require('../model/User')
 
 class LoginController {
   constructor () {
@@ -16,17 +20,41 @@ class LoginController {
    */
   async login (ctx) {
     const { body } = ctx.request
+
     const checkResult = await checkCode(body.sid, body.code)
-    if (checkResult.result) {
-      ctx.body = new Success({
-        code: 200
-      })
-    } else {
+    if (!checkResult) {
       ctx.body = new Fail({
         code: 401,
-        msg: checkResult.isExpired ? '验证码超时,请重试' : '验证码错误,请重试'
+        msg: '验证码错误,请重试'
       })
+      return
     }
+
+    // 数据库中的 user
+    const user = await User.findOne({ user_name: body.user_name })
+
+    // 用户验证结果
+    const checkUser = user && user.password === body.password
+    if (!checkUser) {
+      ctx.body = new Fail({
+        code: 404,
+        msg: user !== null ? '用户名或者密码错误' : '用户不存在'
+      })
+      return
+    }
+
+    // 删除验证码
+    delValue(body.sid)
+    const token = jsonwebtoken.sign({ id: 'Riceecir' }, JWT_SECRET, {
+      expiresIn: Math.floor((Date.now() / 1000) + (60 * 60 * 24))
+    })
+
+    ctx.body = new Success({
+      code: 200,
+      data: {
+        token
+      }
+    })
   }
 
   /** 找回密码

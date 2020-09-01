@@ -3,15 +3,12 @@
 class Success {
   constructor (res) {
     const defaultOptions = {
+      data: {},
       code: 200,
-      error_code: null,
       msg: 'success',
-      data: {}
+      error_code: null
     }
-    return {
-      ...defaultOptions,
-      ...res
-    }
+    return Object.assign(defaultOptions, res)
   }
 }
 
@@ -19,15 +16,12 @@ class Success {
 class Fail {
   constructor (res) {
     const defaultOptions = {
+      data: {},
       code: 500,
-      error_code: 1000,
       msg: 'fail',
-      data: {}
+      error_code: 1000
     }
-    return {
-      ...defaultOptions,
-      ...res
-    }
+    return Object.assign(defaultOptions, res)
   }
 }
 
