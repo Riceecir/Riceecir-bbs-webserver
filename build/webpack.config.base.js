@@ -3,7 +3,7 @@ const NodeExternals = require('webpack-node-externals')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const resolve = p => {
-  return path.join(__dirname, '../', p)
+  return path.join(__dirname, '..', p)
 }
 
 module.exports = {
@@ -28,6 +28,11 @@ module.exports = {
         exclude: resolve('node_modules')
       }
     ]
+  },
+  resolve: {
+    alias: {
+      '@': resolve('src')
+    }
   },
 
   externals: [

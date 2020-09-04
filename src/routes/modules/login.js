@@ -7,5 +7,7 @@ router.prefix('/api/login')
 router.post('/sendForgetMsg', loginController.sendForgetMsg)
 // 用户登录
 router.post('/login', loginController.login)
+// 用户注册
+router.post('/register', loginController.register)
 
 module.exports = router

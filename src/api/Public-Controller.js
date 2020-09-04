@@ -1,6 +1,6 @@
 /* 通用接口 */
 const svgCaptcha = require('svg-captcha')
-const { Success } = require('../model/body')
+const { Success } = require('../model/Body')
 const { setValue } = require('../config/redis.config')
 
 class PublicController {

@@ -1,6 +1,6 @@
 const path = require('path')
 // Config
-const { JWT_SECRET } = require('./config/index')
+const { JWT_SECRET } = require('@/config/index')
 // Koa以及Koa中间件
 const Koa = require('koa')
 const portfinder = require('portfinder')
@@ -8,11 +8,11 @@ const koaBody = require('koa-body')
 const koaCors = require('@koa/cors')
 const helmet = require('koa-helmet')
 const koaStatic = require('koa-static')
-const router = require('./routes/index')
+const router = require('@/routes/index')
 const koaJson = require('koa-json')
 const koaCompose = require('koa-compose')
 const koaJwt = require('koa-jwt')
-const errorHandle = require('./common/ErrorHandle')
+const errorHandle = require('@/common/ErrorHandle')
 // const { client, setValue, getValue, delValue } = require('./config/redis.config')
 
 // 自己实现的静态资源服务
@@ -20,7 +20,7 @@ const errorHandle = require('./common/ErrorHandle')
 
 const app = new Koa()
 const jwt = koaJwt({ secret: JWT_SECRET })
-  .unless({ path: [/^\/api\/public/, /\/login/] })
+  .unless({ path: [/^\/api\/public/, /\/login/, /\/user\/checkUserName/] })
 const middleware = koaCompose([
   koaBody(),
   koaStatic(path.join(__dirname, './static')),
