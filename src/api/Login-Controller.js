@@ -38,7 +38,6 @@ class LoginController {
     if (!checkUser) {
       ctx.body = new Fail({
         code: 404,
-        error_code: user !== null ? 1101 : 1102,
         msg: user !== null ? '用户名或者密码错误' : '用户不存在'
       })
       return
@@ -89,13 +88,11 @@ class LoginController {
     // 检查不通过的项出现问题和提示语
     const failItem = []
     const errorTips = {}
-    let errorCode = null
     // 检查用户名是否已经注册
     const userFromUserName = await User.findOne({ user_name: body.user_name })
     if (userFromUserName !== null && typeof userFromUserName.user_name !== 'undefined') {
       failItem.push('user_name')
       errorTips.user_name = '用户名已存在'
-      errorCode = 1201
       check = false
     }
     // 检查邮箱是否已注册
@@ -103,7 +100,6 @@ class LoginController {
     if (userFromEmail !== null && typeof userFromEmail.email !== 'undefined') {
       failItem.push('email')
       errorTips.email = '邮箱已被注册,请更换或找回密码'
-      errorCode = 1202
       check = false
     }
 
@@ -125,7 +121,6 @@ class LoginController {
     } else {
       ctx.body = new Fail({
         code: 500,
-        error_code: errorCode,
         data: {
           failItem,
           errorTips
