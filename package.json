@@ -42,7 +42,7 @@
     "nodemailer": "^6.4.8",
     "nodemon": "^2.0.4",
     "portfinder": "^1.0.26",
-    "redis": "^3.0.2",
+    "redis": "^3.1.1",
     "svg-captcha": "^1.4.0",
     "terser-webpack-plugin": "^3.0.2",
     "webpack": "^4.43.0",
