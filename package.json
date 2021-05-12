@@ -39,7 +39,7 @@
     "koa-router": "^8.0.8",
     "koa-static": "^5.0.0",
     "moment": "^2.26.0",
-    "nodemailer": "^6.4.8",
+    "nodemailer": "^6.4.16",
     "nodemon": "^2.0.4",
     "portfinder": "^1.0.26",
     "redis": "^3.0.2",
